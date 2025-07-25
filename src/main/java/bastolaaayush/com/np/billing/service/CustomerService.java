@@ -14,7 +14,7 @@ public class CustomerService {
     private CustomerRepository customerRepository;
 
     public boolean insertCustomer(Customer customer){
-        Customer customer1 = customerRepository.save(customer);
+        customerRepository.save(customer);
         return true;
     }
 
