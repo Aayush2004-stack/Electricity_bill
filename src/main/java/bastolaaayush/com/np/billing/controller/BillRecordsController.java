@@ -1,32 +1,40 @@
 package bastolaaayush.com.np.billing.controller;
 
 import bastolaaayush.com.np.billing.calculation.BillCalculation;
-import bastolaaayush.com.np.billing.dao.BillRecordsDAO;
-import bastolaaayush.com.np.billing.model.BillRecords;
+
+import bastolaaayush.com.np.billing.model.BillRecord;
+import bastolaaayush.com.np.billing.service.BillRecordService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/billRecord")
 public class BillRecordsController {
-    private BillRecordsDAO billRecordsDAO = new BillRecordsDAO();
-    private BillCalculation billCalculation = new BillCalculation();
+
+    @Autowired
+    private BillRecordService billRecordService;
+
+    @Autowired
+    private BillCalculation billCalculation;
 
     @PostMapping ("/bill")
     public boolean generateBill(@RequestParam int customerId, @RequestParam double unitsConsumed) {
-        double bill = billCalculation.calculateBill(unitsConsumed);
-        return billRecordsDAO.insertBillRecord(customerId, bill);
+        double billAmount = billCalculation.calculateBill(unitsConsumed);
+        BillRecord bill =new BillRecord(customerId, billAmount);
+        return billRecordService.insertBillRecord(bill);
 
     }
 
     @GetMapping("/bills")
-    public List<BillRecords> getAllBillRecords() {
-        return billRecordsDAO.getAllBillRecords();
+    public List<BillRecord> getAllBillRecords() {
+        return billRecordService.getAllBillRecords();
     }
 
     @GetMapping("highestBill")
-    public BillRecords getHighestPayingCustomer(){
-        return billRecordsDAO.getHighestPayingCustomer();
+    public BillRecord getHighestPayingCustomer(){
+        return billRecordService.getHighestPayingCustomer();
     }
 }

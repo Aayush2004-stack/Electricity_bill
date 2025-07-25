@@ -1,5 +1,8 @@
 package bastolaaayush.com.np.billing.calculation;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class BillCalculation {
     public double calculateBill(double unitsConsumed) {
         double bill = 0;
