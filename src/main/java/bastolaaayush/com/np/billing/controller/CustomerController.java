@@ -4,11 +4,13 @@ package bastolaaayush.com.np.billing.controller;
 import bastolaaayush.com.np.billing.model.Customer;
 import bastolaaayush.com.np.billing.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.ui.Model;
 
-@RestController
+@Controller
 @RequestMapping("/customer")
 public class CustomerController {
     @Autowired
@@ -24,9 +26,9 @@ public class CustomerController {
     }
 
     @GetMapping("/all")
-    public List<Customer> getAllCustomers(){
-        System.out.println("getting customer");
-        return customerService.getAllCustomers();
+    public String getAllCustomers(Model model){
+        model.addAttribute("customer", customerService.getAllCustomers());
+        return "home";
     }
 
     @GetMapping("/id")
