@@ -28,7 +28,7 @@ public class CustomerController {
     @GetMapping("/all")
     public String getAllCustomers(Model model){
         model.addAttribute("customer", customerService.getAllCustomers());
-        return "home";
+        return "customerRecords";
     }
 
     @GetMapping("/id")
