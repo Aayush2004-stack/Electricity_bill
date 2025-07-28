@@ -12,8 +12,11 @@ public class BillRecord {
     private int billId;
 
     private int customerId;
-    private LocalDate billDate;
     private double billAmount;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "billDate", insertable = false, updatable = false)
+    private LocalDate billDate;
 
     public BillRecord() {
     }
