@@ -16,13 +16,17 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-
-
-
     @PostMapping
-    public boolean addCustomer(@RequestParam String customerName, @RequestParam int houseNumber,@RequestParam double unitsConsumed){
+    public String addCustomer(@RequestParam String customerName, @RequestParam int houseNumber,@RequestParam double unitsConsumed){
         Customer customer = new Customer(customerName, houseNumber, unitsConsumed);
-        return customerService.insertCustomer(customer);
+        if (customerService.insertCustomer(customer)){
+
+            return "redirect:/billRecord/generateBill?customerName=" + customerName + "&houseNumber=" + houseNumber
+                    + "&unitsConsumed=" + unitsConsumed;
+        }
+        else{
+            return "Error inserting";
+        }
     }
 
     @GetMapping("/all")
