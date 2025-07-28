@@ -70,7 +70,7 @@
     <%@ include file ="/WEB-INF/views/navBar.jsp"%>
 
     <div class="form-container">
-            <form action="submitCustomer" method="post">
+            <form action="${pageContext.request.contextPath}/customer" method="post">
             <h1 class ="text-4xl font-bold mb-8 text-center text-navy-800">Enter Customer Details</h1>
 
 
