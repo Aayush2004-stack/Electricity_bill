@@ -6,11 +6,12 @@ import bastolaaayush.com.np.billing.model.BillRecord;
 import bastolaaayush.com.np.billing.model.Customer;
 import bastolaaayush.com.np.billing.service.BillRecordService;
 import bastolaaayush.com.np.billing.service.CustomerService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 
@@ -42,16 +43,17 @@ public class BillRecordsController {
             return "Calculated successfully";
         }
         return "Error calculating";
-
     }
 
     @GetMapping("/bills")
-    public List<BillRecord> getAllBillRecords() {
-        return billRecordService.getAllBillRecords();
+    public String getAllBillRecords(Model model) {
+        model.addAttribute("bills",billRecordService.getAllBillRecords());
+        return "bills";
     }
 
-    @GetMapping("highestBill")
-    public BillRecord getHighestPayingCustomer(){
-        return billRecordService.getHighestPayingCustomer();
-    }
+//    @GetMapping("/highestBill")
+//    public String getHighestPayingCustomer(Model model){
+//        model.addAttribute("highestBill",billRecordService.getHighestPayingCustomer());
+//        return "bills";
+//    }
 }
