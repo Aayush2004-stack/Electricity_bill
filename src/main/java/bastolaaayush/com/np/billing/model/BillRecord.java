@@ -3,6 +3,7 @@ package bastolaaayush.com.np.billing.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Table(name = "billRecord")
@@ -16,7 +17,7 @@ public class BillRecord {
 
     @Temporal(TemporalType.DATE)
     @Column(name = "billDate", insertable = false, updatable = false)
-    private LocalDate billDate;
+    private Date billDate;
 
     public BillRecord() {
     }
@@ -33,7 +34,7 @@ public class BillRecord {
     public int getCustomerId() {
         return customerId;
     }
-    public LocalDate getBillDate() {
+    public Date getBillDate() {
         return billDate;
     }
     public double getBillAmount() {
