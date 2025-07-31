@@ -12,7 +12,10 @@ public class BillRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int billId;
 
-    private int customerId;
+    @ManyToOne
+    @JoinColumn(name = "customerId", nullable = false)
+    private Customer customer;
+
     private double billAmount;
 
     @Temporal(TemporalType.DATE)
@@ -22,18 +25,10 @@ public class BillRecord {
     public BillRecord() {
     }
 
-    public BillRecord(int customerId, double billAmount) {
-        this.customerId = customerId;
-        this.billAmount = billAmount;
-    }
-
-
     public int getBillId() {
         return billId;
     }
-    public int getCustomerId() {
-        return customerId;
-    }
+
     public Date getBillDate() {
         return billDate;
     }
@@ -41,5 +36,15 @@ public class BillRecord {
         return billAmount;
     }
 
+    public Customer getCustomer() {
+        return customer;
+    }
 
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public void setBillAmount(double billAmount) {
+        this.billAmount = billAmount;
+    }
 }
