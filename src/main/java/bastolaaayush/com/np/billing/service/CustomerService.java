@@ -21,9 +21,6 @@ public class CustomerService {
     public List<Customer> getAllCustomers(){
         return customerRepository.findAll();
     }
-    public Optional<Customer> getCustomerIdByNameAndHouseNumber(Customer customer) {
-        return customerRepository.findByCustomerNameAndHouseNumber(customer.getCustomerName(), customer.getHouseNumber());
-    }
 
 
 }
