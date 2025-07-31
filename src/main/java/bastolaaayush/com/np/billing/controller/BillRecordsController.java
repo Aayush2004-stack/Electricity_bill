@@ -7,6 +7,7 @@ import bastolaaayush.com.np.billing.model.Customer;
 import bastolaaayush.com.np.billing.service.BillRecordService;
 import bastolaaayush.com.np.billing.service.CustomerService;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,19 +29,17 @@ public class BillRecordsController {
     private BillCalculation billCalculation;
 
     @GetMapping("/generateBill")
-    public String generateBill(@RequestParam String customerName,
-                               @RequestParam int houseNumber,
-                               @RequestParam double unitsConsumed) {
+    public String generateBill(@RequestParam double unitsConsumed, HttpSession session) {
 
-        Customer customer = new Customer(customerName, houseNumber, unitsConsumed);
-        Optional<Customer> optionalCustomer = customerService.getCustomerIdByNameAndHouseNumber(customer);
-        int customerId= optionalCustomer.orElseThrow(()-> new RuntimeException("Customer not found")
-        ).getCustomerId();
+
         double billAmount = billCalculation.calculateBill(unitsConsumed);
 
-        BillRecord bill =new BillRecord(customerId, billAmount);
+        Customer customer=(Customer) session.getAttribute("customer");
+        BillRecord bill =new BillRecord();
+        bill.setBillAmount(billAmount);
+        bill.setCustomer(customer);
         if(billRecordService.insertBillRecord(bill)){
-            return "Calculated successfully";
+            return "success";
         }
         return "Error calculating";
     }
